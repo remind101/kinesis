@@ -27,6 +27,8 @@ $ cat /var/log/syslog | kinesis logs -p partitionKey
 The Go library exposes an io.Writer implementation that writes to an Amazon Kinesis stream.
 
 ```go
+import "github.com/remind101/kinesis/kinesis"
+
 stream = bufio.NewWriter(kinesis.NewDefaultWriter("streamName", "partitionKey"))
 io.Copy(stream, os.Stdin)
 ```
