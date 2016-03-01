@@ -13,13 +13,13 @@ $ go get -u github.com/remind101/kinesis
 Stream a file to a kinesis stream.
 
 ```console
-$ cat /var/log/syslog | kinesis logs
+$ cat /var/log/syslog | kinesis <stream>
 ```
 
 Stream to a particular partition key.
 
 ```console
-$ cat /var/log/syslog | kinesis logs -p partitionKey
+$ cat /var/log/syslog | kinesis <stream> -p <partitionKey>
 ```
 
 ## Go Library
