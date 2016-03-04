@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"flag"
 	"fmt"
 	"io"
@@ -24,7 +23,7 @@ func main() {
 
 	streamName := os.Args[1]
 
-	stream := bufio.NewWriter(kinesis.NewDefaultWriter(streamName, *partitionKey))
+	stream := newWriter(streamName, *partitionKey)
 
 	errCh := make(chan error, 1)
 	c := make(chan os.Signal, 1)
@@ -50,4 +49,10 @@ func main() {
 		fmt.Fprintf(os.Stderr, "err: %v", err)
 		os.Exit(1)
 	}
+}
+
+// newWriter returns an io.Writer that will ideally be able to flush to kinesis
+// as fast as possible.
+func newWriter(streamName, partitionKey string) *kinesis.BufferedWriter {
+	return kinesis.NewFastWriter(streamName, partitionKey)
 }
